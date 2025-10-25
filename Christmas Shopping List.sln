@@ -1,0 +1,23 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.36518.9 d17.14
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "Christmas Shopping List", "Christmas Shopping List.pyproj", "{3928DD25-DFDD-4AA6-8D9C-6129A740CCFF}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3928DD25-DFDD-4AA6-8D9C-6129A740CCFF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3928DD25-DFDD-4AA6-8D9C-6129A740CCFF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {A78F4AFD-19A1-42E9-8615-E24EB4A180C9}
+	EndGlobalSection
+EndGlobal
