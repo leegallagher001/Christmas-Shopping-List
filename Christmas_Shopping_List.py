@@ -3,12 +3,15 @@
 # This program creates a Christmas shopping list, allowing the user to add people, presents and prices to the list, find the most and least expensive
 # presents on the list, and 
 
-# (0) Declare Global variables
+# Original version used temporary lists, but this one uses JSON
+
+# (0) Imports & Declare Global Variables
+
+import json
+
+shopping_list = "christmas_shopping_list.json" # imported JSON file
 
 numPeople = 0
-names = []
-presents = []
-prices = []
 
 # (1) Opening Statement
 
@@ -23,45 +26,66 @@ def addToList(): # Menu Option 1 - Adding Items To List
 
     numPeople = int(input("Enter the number of people you want to buy presents for: "))
 
+    list_entry = {}
+
     for i in range(0, numPeople):
-        name = input("Enter the name of the person: ")
-        names.append(name)
-        present = input("What do you want to buy them?: ")
-        presents.append(present)
-        price = int(input("What is your budget?: "))
-        prices.append(price)
-        print("\n")
+
+        with open (shopping_list, 'r') as f:
+            list_entries = json.load(f)
+
+            list_entry["name"] = input("Enter the name of the person: ")
+            list_entry["present"] = input("What do you want to buy them?: ")
+            list_entry["price"] = int(input("What is your budget?: "))
+            print("\n")
+
+            list_entries.append(list_entry)
+
+        with open (shopping_list, 'w') as f:
+            json.dump(list_entries, f, indent=4)
+            
 
 def findMostExpensive(): # Menu Option 2 - Finding Most Expensive Item List
 
-    maximum = prices[0]
-    maxCounter = 0
+   with open (shopping_list, 'r') as f:
+       list_entries = json.load(f)
 
-    for index in range(0, len(prices)):
-        if (prices[index] > maximum):
-            maximum = prices[index]
-            maxCounter = presents[index]
-    print("The most expensive item was the " , maxCounter, ", costing ", maximum)
+       maximum = 0
+       maxCounter = ""
+
+       for list_entry in list_entries:
+           if (list_entry["price"] > maximum):
+               maximum = list_entry["price"]
+               maxCounter = list_entry["present"]
+
+   print("The most expensive item on the list is the ", maxCounter, ", costing ", maximum)
 
 def findLeastExpensive(): # Menu Option 3 - Finding Least Expensive Item On Current List
 
-    minimum = prices[0]
-    minCounter = 0
+   with open (shopping_list, 'r') as f:
+       list_entries = json.load(f)
 
-    for index in range(0, len(prices)):
-        if (minimum > prices[index]):
-            minimum = prices[index]
-            minCounter = presents[index]
-    print("The least expensive item was the ", minCounter, ", costing ", minimum)
+       minimum = 2000000000 # an inelegant solution, but it worked (so long as one of the presents doesn't cost 2 billion!)
+       minCounter = ""
+
+       for list_entry in list_entries:
+           if (minimum > list_entry["price"]):
+               minimum = list_entry["price"]
+               minCounter = list_entry["present"]
+
+   print("The least expensive item on the list is the ", minCounter, ", costing ", minimum)
 
 def findAmountOfItem(): # Menu Option 4 - Finding The Amount Of An Item On List
 
-    item_query = input("Which item are you interested in?: ")
-    item_count = 0
+    with open (shopping_list, 'r') as f:
+        list_entries = json.load(f)
 
-    for index in range(0, len(presents)):
-        if (presents[index] == item_query):
-            item_count +=1
+        item_query = input("Which item are you interested in?: ")
+        item_count = 0
+
+        for list_entry in list_entries:
+            if (list_entry["present"] == item_query):
+                item_count +=1
+
     print("There are ", item_count, " ", item_query, " on your list.")
 
 
@@ -71,11 +95,14 @@ def viewList(): # Menu Option 5 - Opens Up Current List To View
     print("Here is your shopping list so far:")
     print("\n")
 
-    for index in range(0, len(names)):
-        print("Name: ", names[index])
-        print("Present: ", presents[index])
-        print("Price: ", prices[index])
-        print("\n")
+    with open (shopping_list, 'r') as f:
+        list_entries = json.load(f)
+
+        for list_entry in list_entries:
+            print("Name: ", list_entry["name"])
+            print("Present: ", list_entry["present"])
+            print("Price: ", list_entry["price"])
+            print("\n")
 
 # (3) Main Menu
 
