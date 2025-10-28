@@ -86,7 +86,7 @@ def findAmountOfItem(): # Menu Option 4 - Finding The Amount Of An Item On List
             if (list_entry["present"] == item_query):
                 item_count +=1
 
-    print("There are ", item_count, " ", item_query, " on your list.")
+    print("There are", item_count, item_query, "on your list.")
 
 
 def viewList(): # Menu Option 5 - Opens Up Current List To View
@@ -104,6 +104,40 @@ def viewList(): # Menu Option 5 - Opens Up Current List To View
             print("Price: ", list_entry["price"])
             print("\n")
 
+def deleteListItem(): # Menu Option 6 - Allows User To Delete List Item
+
+    remaining_list = [] # holds the list entries we wish to keep once they have been looped through below
+
+    with open (shopping_list, 'r') as f:
+        list_entries = json.load(f)
+
+    if not list_entries:
+        print("No Entries Saved")
+    else:
+        print("\n")
+        print("Here is your shopping list so far: ")
+        print("\n")
+        for list_entry in list_entries:
+            print("Name: ", list_entry["name"])
+            print("Present: ", list_entry["present"])
+            print("Price: ", list_entry["price"])
+            print("\n")
+        print("\n")
+        entry_to_delete = input("Enter Name Of Entry To Be Deleted: ") # prompts user to enter name of list entry to be deleted
+        print("\n")
+
+        for list_entry in list_entries:
+            if list_entry["name"] == entry_to_delete: # if an entry is found matching the name of list entry the user wishes to delete
+                pass # continues loop without saving that entry we wish to delete to "remaining_list"
+            else:
+                remaining_list.append(list_entry) # adds the diary entries that we want to keep back onto the JSON file
+
+    with open (shopping_list, 'w') as f:
+        json.dump(remaining_list, f, indent=4)
+
+    print("\n")
+    print(entry_to_delete, "deleted successfully!")
+
 # (3) Main Menu
 
 print("Shopping List Main Menu")
@@ -113,14 +147,15 @@ print("2. Find Most Expensive Item On List")
 print("3. Find Least Expensive Item On List")
 print("4. Find Amount Of Item On List")
 print("5. View List")
-print("6. Exit List Program")
+print("6. Delete List Item")
+print("7. Exit List Program")
 print("\n")
 
 # (4) Activate Functions
 
 menuChoice = int(input("Choose An Option: "))
 
-while menuChoice != 6:
+while menuChoice != 7:
 
     if menuChoice == 1:
         addToList()
@@ -144,6 +179,11 @@ while menuChoice != 6:
 
     elif menuChoice == 5:
         viewList()
+        print("\n")
+        menuChoice = int(input("Ready For Something Else? Choose Another Option: "))
+
+    elif menuChoice == 6:
+        deleteListItem()
         print("\n")
         menuChoice = int(input("Ready For Something Else? Choose Another Option: "))
 

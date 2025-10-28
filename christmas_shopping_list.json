@@ -18,15 +18,5 @@
         "name": "Stan",
         "present": "Chocolates",
         "price": 5
-    },
-    {
-        "name": "Elon",
-        "present": "Falcon 9",
-        "price": 10000
-    },
-    {
-        "name": "Bezos",
-        "present": "New Shepard",
-        "price": 5000
     }
 ]
